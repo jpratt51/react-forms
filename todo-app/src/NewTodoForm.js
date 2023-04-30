@@ -1,31 +1,25 @@
 import React, { useState } from "react";
 
 const NewTodoForm = ({ addTodo }) => {
-    const INITIAL_STATE = {
-        todo: "",
-    };
-    const [formData, setFormData] = useState(INITIAL_STATE);
+    const [todo, setTodo] = useState("");
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((formData) => ({
-            ...formData,
-            [name]: value,
-        }));
+        setTodo(e.target.value);
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        addTodo({ ...formData });
-        setFormData(INITIAL_STATE);
+        addTodo(todo);
+        setTodo("");
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <label htmlFor="todo">Todo Item </label>
+            <label htmlFor="todoItem">Todo Item </label>
             <input
+                id="todoItem"
                 type="text"
-                name="todo"
+                name="todoItem"
+                value={todo}
                 placeholder="Todo Item"
-                value={formData.todo}
                 onChange={handleChange}
             />
             <button>Add Todo</button>

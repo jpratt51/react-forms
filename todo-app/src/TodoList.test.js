@@ -1,30 +1,30 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import BoxList from "./BoxList";
+import TodoList from "./TodoList";
 
 it("renders without crashing", function () {
-    render(<BoxList />);
+    render(<TodoList />);
 });
 
 it("matches snapshot", function () {
-    const { asFragment } = render(<BoxList />);
+    const { asFragment } = render(<TodoList />);
     expect(asFragment()).toMatchSnapshot();
 });
 
-it("should add new box", function () {
-    const { getByLabelText, queryByText, queryByTestId } = render(<BoxList />);
-    const input = getByLabelText("Background Color");
-    const btn = queryByText("Add Box");
-    expect(queryByTestId("green 100 100")).not.toBeInTheDocument();
-    fireEvent.change(input, { target: { value: "green" } });
+it("should add new todo", function () {
+    const { getByLabelText, queryByText, queryByTestId } = render(<TodoList />);
+    const input = getByLabelText("Todo Item");
+    const btn = queryByText("Add Todo");
+    expect(queryByText("cook dinner")).not.toBeInTheDocument();
+    fireEvent.change(input, { target: { value: "cook dinner" } });
     fireEvent.click(btn);
-    expect(queryByTestId("green 100 100")).toBeInTheDocument();
+    expect(queryByText("cook dinner")).toBeInTheDocument();
 });
 
-it("should delete box", function () {
-    const { queryByTestId } = render(<BoxList />);
-    const btn = queryByTestId("red 300 200 X");
-    expect(queryByTestId("red 300 200")).toBeInTheDocument();
+it("should delete todo", function () {
+    const { queryByTestId } = render(<TodoList />);
+    const btn = queryByTestId("mow yard");
+    expect(queryByTestId("mow yard")).toBeInTheDocument();
     fireEvent.click(btn);
-    expect(queryByTestId("red 300 200")).not.toBeInTheDocument();
+    expect(queryByTestId("mow yard")).not.toBeInTheDocument();
 });

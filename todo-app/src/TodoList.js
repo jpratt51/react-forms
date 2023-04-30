@@ -9,7 +9,7 @@ const TodoList = () => {
     ];
     const [todos, setTodos] = useState(INITIAL_STATE);
     const addTodo = (newTodo) => {
-        setTodos((todos) => [...todos, { ...newTodo, id: uuid() }]);
+        setTodos((todos) => [...todos, { todo: newTodo, id: uuid() }]);
     };
     const deleteTodo = (id) => {
         setTodos((todos) => todos.filter((box) => box.id !== id));
@@ -21,7 +21,9 @@ const TodoList = () => {
             {todos.map(({ id, todo }) => (
                 <div key={id}>
                     <div id={id}>{todo}</div>
-                    <button onClick={() => deleteTodo(id)}>X</button>
+                    <button data-testid={todo} onClick={() => deleteTodo(id)}>
+                        X
+                    </button>
                 </div>
             ))}
         </div>
